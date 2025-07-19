@@ -1,13 +1,300 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeacefulPath - Find your most comfortable route</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+
+            <div class="logo">
+                <div class="logo-icon"><img src="asset/logo 512.png" alt="PeacefulPath Logo" width="45px"></div>
+                <span>PeacefulPath</span>
+                <span class="tagline">Find your most comfortable route</span>
+            </div>
+
+            <div class="header-actions">
+                <button class="header-btn"><img height="34px" src="asset/profile.png" alt="profile picture"></button>
+            </div>
+        </header>
+
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="route-input">
+                <div class="input-group">
+                    <input type="text" placeholder="Current location" id="origin" onchange="updateRoute()">
+                </div>
+                <div class="input-group">
+                    <input type="text" placeholder="Enter destination" id="destination" onchange="updateRoute()">
+                </div>
+                <div class="recent-locations">
+                    <button class="recent-locations-btn" onclick="showRecentLocations()">
+                        🕐 Recent locations
+                    </button>
+                    <button class="swap-btn" onclick="swapLocations()">⇅</button>
+                </div>
+                <button class="find-route-btn" onclick="findPeacefulRoute()">Find Peaceful Route</button>
+            </div>
+
+            <div class="route-options">
+                <h3>Route Options</h3>
+                
+                <!-- Fastest Route -->
+                <div class="route-card fastest" onclick="selectRoute('fastest')">
+                    <div class="route-header">
+                        <div class="route-title">
+                            <span><img src="asset/lightning.png" alt="fast route"></span>
+                            <span>Fastest Route</span>
+                        </div>
+                        <div class="route-time">28 min</div>
+                    </div>
+                    <div class="route-details">
+                        <div class="route-distance">4.2 miles via Broadway</div>
+                        <div class="traffic-indicator">
+                            <span>Heavy traffic</span>
+                        </div>
+                    </div>
+                    <div class="stress-level">
+                        <span>Stress level: High</span>
+                        <div class="stress-bar">
+                            <div class="stress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Most Comfortable Route -->
+                <div class="route-card active" onclick="selectRoute('comfortable')">
+                    <div class="route-header">
+                        <div class="route-title">
+                            <span><img src="asset/comfort.png" alt="comfortable road"></span>
+                            <span>Most Comfortable Route</span>
+                        </div>
+                        <div class="route-time">
+                            32 min
+                            <span class="route-time-extra">(+4 min)</span>
+                        </div>
+                    </div>
+                    <div class="route-details">
+                        <div class="route-distance">4.5 miles via Park Ave</div>
+                        <div class="traffic-indicator">
+                            <span>Light traffic</span>
+                        </div>
+                    </div>
+                    <div class="comfort-score">
+                        <div class="comfort-circle">
+                            <div class="comfort-number">82</div>
+                        </div>
+                        <div class="comfort-details">
+                            <div class="comfort-rating">Very Good</div>
+                            <div class="comfort-icons">
+                                <div class="comfort-icon">
+                                    <div class="comfort-icon-symbol">
+                                        <img src="asset/air.png" alt="air icon">
+                                    </div>
+                                    <div class="comfort-icon-label">Clean</div>
+                                </div>
+                                <div class="comfort-icon">
+                                    <div class="comfort-icon-symbol">
+                                        <img src="asset/nosound.png" alt="no sound">
+                                    </div>
+                                    <div class="comfort-icon-label">Quiet</div>
+                                </div>
+                                <div class="comfort-icon">
+                                    <div class="comfort-icon-symbol">
+                                        <img src="asset/shield.png" alt="shield">
+                                    </div>
+                                    <div class="comfort-icon-label">Safe</div>
+                                </div>
+                                <div class="comfort-icon">
+                                    <div class="comfort-icon-symbol">
+                                        <img src="asset/tree.png" alt="tree">
+                                    </div>
+                                    <div class="comfort-icon-label">Green</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wellness-impact">
+                        Wellness impact: You'll arrive 34% more relaxed than the fastest route
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Metrics -->
+            <div class="detailed-metrics">
+                <div class="metrics-header" onclick="toggleMetrics()">
+                    <h3 class="metrics-title">Detailed Comfort Metrics</h3>
+                    <span id="metrics-toggle">▼</span>
+                </div>
+                <div class="metrics-content" id="metrics-content">
+                    <div class="metric-item">
+                        <div class="metric-label">
+                            <span>
+                                <img src="asset/air.png" alt="air icon">
+                            </span>
+                            <span>Air Quality</span>
+                        </div>
+                        <div class="metric-value">42 AQI</div>
+                    </div>
+                    <div class="metric-bar">
+                        <div class="metric-fill good" style="width: 65%"></div>
+                    </div>
+                    <div class="metric-labels">
+                        <span>Good</span>
+                        <span>Moderate</span>
+                        <span>Poor</span>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-label">
+                            <span>
+                                <img src="asset/sound.png" alt="no sound">
+                            </span>
+                            <span>Noise Level</span>
+                        </div>
+                        <div class="metric-value">58 dB</div>
+                    </div>
+                    <div class="metric-bar">
+                        <div class="metric-fill good" style="width: 40%"></div>
+                    </div>
+                    <div class="metric-labels">
+                        <span>Quiet</span>
+                        <span>Moderate</span>
+                        <span>Loud</span>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-label">
+                            <span>
+                                <img src="asset/car.png" alt="car">
+                            </span>
+                            <span>Traffic Stress</span>
+                        </div>
+                        <div class="metric-value">Low</div>
+                    </div>
+                    <div class="metric-bar">
+                        <div class="metric-fill good" style="width: 25%"></div>
+                    </div>
+                    <div class="metric-labels">
+                        <span>Calm</span>
+                        <span>Moderate</span>
+                        <span>Heavy</span>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-label">
+                            <span>
+                                <img src="asset/shield.png" alt="shield">
+                            </span>
+                            <span>Safety Score</span>
+                        </div>
+                        <div class="metric-value">88%</div>
+                    </div>
+                    <div class="metric-bar">
+                        <div class="metric-fill good" style="width: 88%"></div>
+                    </div>
+                    <div class="metric-labels">
+                        <span>Low</span>
+                        <span>Medium</span>
+                        <span>High</span>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-label">
+                            <span>
+                                <img src="asset/tree.png" alt="tree">
+                            </span>
+                            <span>Green Exposure</span>
+                        </div>
+                        <div class="metric-value">65%</div>
+                    </div>
+                    <div class="metric-bar">
+                        <div class="metric-fill good" style="width: 65%"></div>
+                    </div>
+                    <div class="metric-labels">
+                        <span>Low</span>
+                        <span>Medium</span>
+                        <span>High</span>
+                    </div>
+
+                    <div class="overall-impact">
+                        <h4 style="margin-bottom: 12px; color: #059669;">Overall Wellness Impact</h4>
+                        <div class="impact-item">
+                            <span>✓</span>
+                            <span>47% less stressful than fastest route</span>
+                        </div>
+                        <div class="impact-item">
+                            <span>✓</span>
+                            <span>Avoiding 15 minutes of heavy pollution exposure</span>
+                        </div>
+                        <div class="impact-item">
+                            <span>✓</span>
+                            <span>34% reduction in traffic stress</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Map -->
+        <div class="right-panel">
+            <div class="map-container">
+                <div class="map-placeholder">                                        
+                </div>
+            </div>
+
+            <!-- Data Layers Panel
+            <div class="data-layers">
+                <h4>Data Layers</h4>
+                <div class="layer-toggle">
+                    <input type="checkbox" id="air-quality" checked onchange="toggleLayer('air-quality')">
+                    <label for="air-quality">Air Quality</label>
+                </div>
+                <div class="layer-toggle">
+                    <input type="checkbox" id="noise-levels" checked onchange="toggleLayer('noise-levels')">
+                    <label for="noise-levels">Noise Levels</label>
+                </div>
+                <div class="layer-toggle">
+                    <input type="checkbox" id="safety-zones" checked onchange="toggleLayer('safety-zones')">
+                    <label for="safety-zones">Safety Zones</label>
+                </div>
+                <div class="layer-toggle">
+                    <input type="checkbox" id="green-spaces" checked onchange="toggleLayer('green-spaces')">
+                    <label for="green-spaces">Green Spaces</label>
+                </div>
+            </div> -->
+
+            <!-- Map Controls -->
+            <div class="map-controls">
+                <button class="map-btn" onclick="zoomIn()">+</button>
+                <button class="map-btn" onclick="zoomOut()">-</button>
+            </div>
+
+            <!-- Route Comfort Legend -->
+            <div class="route-comfort-legend">
+                <div class="legend-title">Route Comfort</div>
+                <div class="legend-item">
+                    <div class="legend-color high"></div>
+                    <div class="legend-label">High Comfort</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color medium"></div>
+                    <div class="legend-label">Medium Comfort</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color low"></div>
+                    <div class="legend-label">Low Comfort</div>
+                </div>
+                <div class="legend-nav">
+                    <button onclick="previousRoute()">‹</button>
+                    <span>2 / 2</span>
+                    <button onclick="nextRoute()">›</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
